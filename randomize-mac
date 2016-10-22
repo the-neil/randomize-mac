@@ -1,0 +1,8 @@
+#!/bin/bash
+
+INTERFACE="en0"
+OLDMAC=$(ifconfig en0 ether | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+NEWMAC=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+echo $NEWMAC | xargs sudo ifconfig en0 ether
+echo "randomize-mac: $OLDMAC -> $NEWMAC"
+exit 0
